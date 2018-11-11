@@ -3,8 +3,11 @@
 import Vue from 'vue';
 import App from './App';
 
+import filters from './filters';
 import router from './router';
 import store from './store';
+
+filters.forEach(filter => Vue.filter(...filter));
 
 Vue.config.productionTip = false;
 

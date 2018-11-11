@@ -1,30 +1,31 @@
 <template>
-  <div id="app">
-    Funds: {{ myFunds }}
-    <router-view/>
+  <div class="container main-wrapper" id="app">
+    <Header />
+    <div class="main-content">
+      <router-view/>
+    </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import Header from '@/components/Header/Header';
 
 export default {
   name: 'App',
-  computed: {
-    ...mapGetters({
-      myFunds: 'getFunds',
-    })
-  }
+  components: {
+    Header,
+  },
 };
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+.main-wrapper {
+  padding-top: 15px;
+  padding-bottom: 25px;
+}
+.main-content {
+  padding: 10px 15px;
+  border: 1px solid rgba(0,0,0, 0.1);
+  border-radius: 5px;
 }
 </style>
