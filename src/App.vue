@@ -1,7 +1,16 @@
 <template>
   <div class="container main-wrapper" id="app">
     <Header />
-    <div class="main-content">
+    <div class="col-12 text-center" v-if="showLoader">
+      <img src="./assets/preloader.gif">
+    </div>
+    <div class="main-content" v-else>
+      <div class="col-12" v-if="errorsList.length > 0">
+        <h3>Erros!</h3>
+        <p v-for="error in errorsList" :key="error">
+          {{ error }}
+        </p>
+      </div>
       <router-view/>
     </div>
   </div>
@@ -10,10 +19,26 @@
 <script>
 import Header from '@/components/Header/Header';
 
+import { mapGetters, mapActions } from 'vuex';
+
 export default {
   name: 'App',
   components: {
     Header,
+  },
+  computed: {
+    ...mapGetters({
+      showLoader: 'getLoaderState',
+      errorsList: 'getGlobalErrors',
+    }),
+  },
+  methods: {
+    ...mapActions({
+      loadProducts: 'requestProducts',
+    }),
+  },
+  created() {
+    this.loadProducts();
   },
 };
 </script>

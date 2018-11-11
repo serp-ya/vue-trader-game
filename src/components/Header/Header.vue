@@ -5,28 +5,40 @@
       <div class="collapse navbar-collapse">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <router-link class="nav-link" to="portfolio">Portfolio</router-link>
+            <router-link
+              class="nav-link"
+              to="portfolio"
+              active-class="main-link-active"
+            >
+              Portfolio
+            </router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" to="stocks">Stocks</router-link>
+            <router-link
+              class="nav-link"
+              to="stocks"
+              active-class="main-link-active"
+            >
+             Stocks
+            </router-link>
           </li>
         </ul>
 
         <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="#">End Day</a>
+          </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#">
-              Dropdown
+              Save & Load
             </a>
             <div class="dropdown-menu">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Save Data</a>
+              <a class="dropdown-item" href="#">Load Data</a>
             </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Disabled</a>
+            <a class="nav-link" href="#">Funds: {{ myFunds | currencyFormat }}</a>
           </li>
         </ul>
       </div>
@@ -35,8 +47,15 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   name: 'Header',
+  computed: {
+    ...mapGetters({
+      myFunds: 'getFunds',
+    }),
+  },
 };
 </script>
 
@@ -45,9 +64,15 @@ export default {
     padding-top: 10px;
     padding-bottom: 15px;
   }
+
+  .main-link-active {
+    font-weight: bold;
+  }
+
   .navbar-light .navbar-nav .nav-link {
     color: #000000;
   }
+
   .navbar-brand {
     font-weight: bold;
     font-size: 24px;
