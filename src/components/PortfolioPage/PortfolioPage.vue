@@ -2,13 +2,17 @@
   <div class="row">
     <div class="col">
       <h1>Portfolio Page</h1>
-      <ProductCard
-        v-for="product in productsList"
-        :key="product.name"
-        :title="product.name"
-        :price="product.price"
-        type="buy"
-      />
+      <div class="container">
+      <div class="row">
+        <ProductCard
+          v-for="product in productsList"
+          :key="product.name"
+          :title="product.name"
+          :price="product.price"
+          type="buy"
+        />
+      </div>
+      </div>
     </div>
   </div>
 </template>
@@ -26,9 +30,6 @@ export default {
     ...mapGetters({
       productsList: 'getProducts',
     }),
-  },
-  mounted() {
-    console.log('this.productsList', this.productsList);
   },
 };
 </script>
