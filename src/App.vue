@@ -18,7 +18,6 @@
 
 <script>
 import Header from '@/components/Header/Header';
-
 import { mapState, mapActions } from 'vuex';
 
 export default {
@@ -33,12 +32,16 @@ export default {
     }),
   },
   methods: {
-    ...mapActions({
-      loadProducts: 'stocks/requestProducts',
-    }),
+    ...mapActions('player', [
+      'initPlayerDataAction',
+    ]),
+    ...mapActions('stocks', [
+      'requestProducts',
+    ]),
   },
   created() {
-    this.loadProducts();
+    this.initPlayerDataAction();
+    this.requestProducts();
   },
 };
 </script>
