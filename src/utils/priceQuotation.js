@@ -1,6 +1,6 @@
 export default (price) => {
   const toRiseThePrice = Math.random() > 0.5;
-  const coefficient = Math.random();
+  const coefficient = Math.random() / 10;
   const diff = price * coefficient;
   let newPrice = price;
 
