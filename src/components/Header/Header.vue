@@ -26,19 +26,21 @@
 
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" href="#">End Day</a>
+            <span class="nav-link" @click="updateProductsPrices">End Day</span>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#">
+            <span class="nav-link dropdown-toggle" ref="dropdown">
               Save & Load
-            </a>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" href="#">Save Data</a>
-              <a class="dropdown-item" href="#">Load Data</a>
+            </span>
+            <div class="dropdown-menu" :class='dropdownClasses'>
+              <span class="dropdown-item" @click="savePlayerData">Save Data</span>
+              <span class="dropdown-item" @click="loadPlayerData">Load Data</span>
             </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Funds: {{ myFunds | currencyFormat }}</a>
+            <span class="nav-link" style="cursor: default;">
+              Funds: {{ myFunds | currencyFormat }}
+            </span>
           </li>
         </ul>
       </div>
@@ -47,14 +49,48 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapMutations, mapActions } from 'vuex';
 
 export default {
   name: 'Header',
+
+  data() {
+    return {
+      dropdownIsOpen: false,
+    };
+  },
+
   computed: {
     ...mapState('player', {
       myFunds: 'funds',
     }),
+
+    dropdownClasses() {
+      return {
+        show: this.dropdownIsOpen,
+      };
+    },
+  },
+
+  methods: {
+    ...mapMutations('stocks', [
+      'updateProductsPrices',
+    ]),
+
+    ...mapActions('player', [
+      'savePlayerData',
+      'loadPlayerData',
+    ]),
+  },
+
+  created() {
+    document.body.addEventListener('click', (event) => {
+      if (event.target === this.$refs.dropdown) {
+        this.dropdownIsOpen = true;
+      } else {
+        this.dropdownIsOpen = false;
+      }
+    });
   },
 };
 </script>
@@ -76,5 +112,9 @@ export default {
   .navbar-brand {
     font-weight: bold;
     font-size: 24px;
+  }
+
+  .nav-link, .dropdown-item {
+    cursor: pointer;
   }
 </style>

@@ -116,6 +116,31 @@ const player = {
         commit('addGlobalErros', { errorsList: ['Unavailable user id'] }, { root: true });
       }
     },
+
+    savePlayerData: async ({ commit, state }) => {
+      try {
+        const { id, funds, products } = state;
+        const data = { funds, products };
+        const putResultRes = await Vue.http.put(`sessions/${id}.json`, data);
+        await putResultRes.json();
+      } catch (error) {
+        console.error(error);
+        commit('addGlobalErros', { errorsList: ['Failed to save user\'s data'] }, { root: true });
+      }
+    },
+
+    loadPlayerData: async ({ commit, state }) => {
+      try {
+        const { id } = state;
+        const getResultRes = await Vue.http.get(`sessions/${id}.json`);
+        const getResult = await getResultRes.json();
+        commit('initPlayer', { id, ...getResult });
+        commit('stocks/updateProductsPrices', null, { root: true });
+      } catch (error) {
+        console.error(error);
+        commit('addGlobalErros', { errorsList: ['Failed to load user\'s data'] }, { root: true });
+      }
+    },
   },
 };
 
