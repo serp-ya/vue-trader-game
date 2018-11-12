@@ -11,7 +11,9 @@
           {{ error }}
         </p>
       </div>
-      <router-view/>
+      <transition name="slide" mode="out-in">
+        <router-view/>
+      </transition>
     </div>
   </div>
 </template>
@@ -55,5 +57,24 @@ export default {
   padding: 10px 15px;
   border: 1px solid rgba(0,0,0, 0.1);
   border-radius: 5px;
+}
+
+.slide-enter-active {
+  animation: slide-up 200ms ease-out forwards reverse;
+}
+
+.slide-leave-active {
+  animation: slide-up 200ms ease-out forwards;
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-30px);
+    opacity: 0;
+  }
 }
 </style>

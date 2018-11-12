@@ -27,19 +27,22 @@
           class="product-card__button"
           v-if="productType === 'buy'"
           @click="buyClickHandler"
-        >Buy
+          :disabled="quantity <= 0 || !checkEnoughFunds"
+        >{{ checkEnoughFunds ? 'Buy' : 'Not enough funds'}}
         </button>
 
         <button
           class="product-card__button"
           v-else-if="productType === 'sell'"
           @click="sellClickHandler"
-        >Sell
+          :disabled="quantity <= 0 || !checkEnoughQuantity"
+        >{{ checkEnoughQuantity ? 'Sell' : 'Not enough quantity'}}
         </button>
 
         <button
           class="product-card__button"
           v-else
+          :disabled="quantity <= 0"
         >Do nothing
         </button>
       </div>
@@ -106,6 +109,18 @@ export default {
       return this.price * this.quantity;
     },
 
+    checkEnoughFunds() {
+      if (isNaN(this.cost)) {
+        return false;
+      }
+
+      return this.cost < this.funds;
+    },
+
+    checkEnoughQuantity() {
+      return this.quantity <= this.playersQuantity;
+    },
+
     purchase() {
       const { title: name, quantity, cost } = this;
       return { name, quantity, cost };
@@ -124,25 +139,20 @@ export default {
       'sellStocks',
     ]),
 
-    checkEnoughFunds() {
-      if (isNaN(this.cost)) {
-        return false;
-      }
-
-      return this.cost < this.funds;
-    },
-
     cleanQuantity() {
       this.quantity = '';
     },
 
     buyClickHandler() {
       const purchase = this.purchase;
-      const isEnoughFunds = this.checkEnoughFunds();
+      const isEnoughFunds = this.checkEnoughFunds;
       this.cleanQuantity();
 
       if (!isEnoughFunds) {
         this.error = 'Does\'t enough funds';
+        return;
+      } else if (purchase.quantity <= 0) {
+        this.error = 'Quantity of the purchase items can\'t be less or equal than zero';
         return;
       }
 
@@ -153,8 +163,11 @@ export default {
       const purchase = this.purchase;
       this.cleanQuantity();
 
-      if (this.playersQuantity < purchase.quantity) {
+      if (!this.checkEnoughQuantity) {
         this.error = 'Does\'t enough stocks';
+        return;
+      } else if (purchase.quantity <= 0) {
+        this.error = 'Quantity of the purchase items can\'t be less or equal than zero';
         return;
       }
 
