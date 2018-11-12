@@ -1,3 +1,5 @@
+Github Pages demo: https://serp-ya.github.io/vue-trader-game/dist
+
 # vue-trader-game
 
 > 
