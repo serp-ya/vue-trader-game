@@ -19,7 +19,7 @@
 <script>
 import Header from '@/components/Header/Header';
 
-import { mapGetters, mapActions } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 
 export default {
   name: 'App',
@@ -27,14 +27,14 @@ export default {
     Header,
   },
   computed: {
-    ...mapGetters({
-      showLoader: 'getLoaderState',
-      errorsList: 'getGlobalErrors',
+    ...mapState({
+      showLoader: 'showLoader',
+      errorsList: 'globalErrors',
     }),
   },
   methods: {
     ...mapActions({
-      loadProducts: 'requestProducts',
+      loadProducts: 'stocks/requestProducts',
     }),
   },
   created() {

@@ -1,6 +1,9 @@
 export default [
   'currencyFormat',
   (value, currencySign = '$') => {
+    if (value === undefined) {
+      return '';
+    }
     const valueStr = String(value);
     const valueArrReversed = [...valueStr].reverse();
     const charsCount = valueArrReversed.length;

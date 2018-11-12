@@ -9,7 +9,7 @@
           {{ title }}
         </div>
         <div class="product-card__info">
-          ({{ price | currencyFormat }})
+          (Price: {{ price | currencyFormat }})
         </div>
       </div>
 

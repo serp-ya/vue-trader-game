@@ -19,7 +19,7 @@
 
 <script>
 import ProductCard from '@/components/ProductCard/ProductCard';
-import { mapGetters } from 'vuex';
+import { mapState } from 'vuex';
 
 export default {
   name: 'PortfolioPage',
@@ -27,8 +27,8 @@ export default {
     ProductCard,
   },
   computed: {
-    ...mapGetters({
-      productsList: 'getProducts',
+    ...mapState('stocks', {
+      productsList: 'products',
     }),
   },
 };

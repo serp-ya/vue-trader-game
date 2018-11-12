@@ -13,7 +13,7 @@ export default {
   name: 'StocksPage',
   computed: {
     ...mapGetters({
-      myFunds: 'getFunds',
+      myFunds: 'player/getFunds',
     }),
   },
 };

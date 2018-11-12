@@ -10,11 +10,6 @@ export default new Vuex.Store({
     globalErrors: [],
     dayNum: 1,
   },
-  getters: {
-    getLoaderState: state => state.showLoader,
-    getGlobalErrors: state => state.globalErrors,
-    getDayNum: state => state.dayNum,
-  },
   mutations: {
     setLoaderState: (state, { newLoaderState }) => {
       state.showLoader = newLoaderState;

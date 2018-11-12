@@ -47,13 +47,13 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapState } from 'vuex';
 
 export default {
   name: 'Header',
   computed: {
-    ...mapGetters({
-      myFunds: 'getFunds',
+    ...mapState('player', {
+      myFunds: 'funds',
     }),
   },
 };

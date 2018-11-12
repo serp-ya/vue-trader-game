@@ -1,11 +1,9 @@
 import Vue from 'vue';
 
-export default {
+const stocks = {
+  namespaced: true,
   state: {
     products: [],
-  },
-  getters: {
-    getProducts: state => state.products,
   },
   mutations: {
     addProducts: (state, { products }) => {
@@ -17,19 +15,22 @@ export default {
   actions: {
     requestProducts: async ({ commit }) => {
       try {
-        commit('clearGlobalErrors');
-        commit('setLoaderState', { newLoaderState: true });
+        commit('clearGlobalErrors', null, { root: true });
+        commit('setLoaderState', { newLoaderState: true }, { root: true });
+
         const productsRes = await Vue.http.get('goods.json');
         const products = await productsRes.json();
 
         commit('addProducts', { products });
-        commit('setLoaderState', { newLoaderState: false });
+        commit('setLoaderState', { newLoaderState: false }, { root: true });
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e);
-        commit('addGlobalErros', { errorsList: ['Unknown error'] });
-        commit('setLoaderState', { newLoaderState: false });
+        commit('addGlobalErros', { errorsList: ['Unknown error'] }, { root: true });
+        commit('setLoaderState', { newLoaderState: false }, { root: true });
       }
     },
   },
 };
+
+export default stocks;

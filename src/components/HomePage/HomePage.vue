@@ -11,13 +11,13 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapState } from 'vuex';
 
 export default {
   name: 'HomePage',
   computed: {
-    ...mapGetters({
-      myFunds: 'getFunds',
+    ...mapState('player', {
+      myFunds: 'funds',
     }),
   },
 };
@@ -29,4 +29,3 @@ export default {
   font-weight: bold;
 }
 </style>
-
