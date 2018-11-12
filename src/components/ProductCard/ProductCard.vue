@@ -19,6 +19,7 @@
           type="text"
           placeholder="quantity"
           v-model="quantity"
+          @keypress="isNumberInput"
         />
 
         <button class="product-card__button" v-if="productType === 'buy'">Buy</button>
@@ -30,6 +31,10 @@
 </template>
 
 <script>
+import utils from '@/utils';
+
+const { isNumberInput } = utils;
+
 export default {
   name: 'ProductCard',
   data() {
@@ -58,6 +63,9 @@ export default {
         'product-card_type_sell': this.productType === 'sell',
       };
     },
+  },
+  methods: {
+    isNumberInput,
   },
 };
 </script>
