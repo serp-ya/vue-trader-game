@@ -1,4 +1,7 @@
 import Vue from 'vue';
+import utils from '@/utils';
+
+const { priceQuotation } = utils;
 
 const stocks = {
   namespaced: true,
@@ -11,6 +14,14 @@ const stocks = {
         state.products = [...state.products, ...products];
       }
     },
+    updateProductsPrices: (state) => {
+      state.products = state.products.map((product) => {
+        const cloneProduct = { ...product };
+        const newPrice = priceQuotation(cloneProduct.price);
+        cloneProduct.price = newPrice;
+        return cloneProduct;
+      });
+    },
   },
   actions: {
     requestProducts: async ({ commit }) => {
@@ -22,6 +33,7 @@ const stocks = {
         const products = await productsRes.json();
 
         commit('addProducts', { products });
+        commit('updateProductsPrices');
         commit('setLoaderState', { newLoaderState: false }, { root: true });
       } catch (e) {
         // eslint-disable-next-line no-console
