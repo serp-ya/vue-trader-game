@@ -1,6 +1,6 @@
 export default (price) => {
-  const toRiseThePrice = Math.random() > 0.5;
-  const coefficient = Math.random() / 10;
+  const toRiseThePrice = Math.random() > 0.4;
+  const coefficient = Math.random() / 7;
   const diff = price * coefficient;
   let newPrice = price;
 
@@ -10,8 +10,8 @@ export default (price) => {
     newPrice -= diff;
   }
 
-  if (newPrice <= 0) {
-    return price;
+  if (newPrice <= 10) {
+    return 10;
   }
 
   return parseInt(newPrice, 10);
