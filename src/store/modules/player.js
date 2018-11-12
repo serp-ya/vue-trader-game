@@ -10,6 +10,7 @@ const player = {
     funds: 0,
     products: [],
   },
+
   getters: {
     getProducts: (state, getters, rootState) => state.products.map((myProd) => {
       const price = rootState.stocks.products.find(prod => prod.name === myProd.name).price;
@@ -17,20 +18,49 @@ const player = {
       return result;
     }),
   },
+
   mutations: {
     setFunds: (state, { funds }) => {
       state.funds = funds;
     },
+
     addFunds: (state, { funds }) => {
       state.funds += funds;
     },
+
     initPlayer: (state, { id, funds, products = [] }) => {
       storageService.userId = id;
       state.id = id;
       state.funds = funds;
       state.products = products;
     },
+
+    buyStocks: (state, { purchase }) => {
+      const { cost, ...productData } = purchase;
+      const playersProduct = state.products.find(prod => prod.name === productData.name);
+      state.funds -= cost;
+
+      if (playersProduct) {
+        playersProduct.quantity += productData.quantity;
+      } else {
+        state.products = [...state.products, productData];
+      }
+    },
+
+    sellStocks: (state, { purchase }) => {
+      const { cost, ...productData } = purchase;
+      const playersProductIndex = state.products.findIndex(prod => prod.name === purchase.name);
+      const playersProduct = state.products[playersProductIndex];
+      state.funds += cost;
+
+      if (playersProduct.quantity === productData.quantity) {
+        state.products.splice(playersProductIndex, 1);
+      } else {
+        playersProduct.quantity -= productData.quantity;
+      }
+    },
   },
+
   actions: {
     initPlayerDataAction: async ({ commit, state, dispatch }) => {
       try {
@@ -46,6 +76,7 @@ const player = {
         commit('addGlobalErros', { errorsList: ['Player initialisation was faild'] }, { root: true });
       }
     },
+
     createNewPlayerAction: async ({ commit }) => {
       try {
         const playerData = {
@@ -67,6 +98,7 @@ const player = {
         commit('addGlobalErros', { errorsList: ['Player creation was faild'] }, { root: true });
       }
     },
+
     getPlayerDataAction: async ({ commit, state }) => {
       try {
         const { id } = state;

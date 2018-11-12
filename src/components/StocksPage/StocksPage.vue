@@ -10,6 +10,7 @@
               :key="product.name"
               :title="product.name"
               :price="product.price"
+              :playersQuantity="product.quantity"
               productType="sell"
             />
           </div>
@@ -30,9 +31,11 @@ import { mapGetters } from 'vuex';
 
 export default {
   name: 'StocksPage',
+
   components: {
     ProductCard,
   },
+
   computed: {
     ...mapGetters('player', {
       productsList: 'getProducts',
