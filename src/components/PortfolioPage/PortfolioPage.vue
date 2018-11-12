@@ -3,15 +3,15 @@
     <div class="col">
       <h1>Portfolio Page</h1>
       <div class="container">
-      <div class="row">
-        <ProductCard
-          v-for="product in productsList"
-          :key="product.name"
-          :title="product.name"
-          :price="product.price"
-          type="buy"
-        />
-      </div>
+        <div class="row">
+          <ProductCard
+            v-for="product in productsList"
+            :key="product.name"
+            :title="product.name"
+            :price="product.price"
+            productType="buy"
+          />
+        </div>
       </div>
     </div>
   </div>
